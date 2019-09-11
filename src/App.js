@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, Container } from "@material-ui/core";
 import Header from "./components/Header";
+import MainContent from "./components/MainContent";
 import FormDialog from "./components/FormDialog";
 import ScoresTable from "./components/ScoresTable";
 
@@ -10,8 +11,7 @@ function App() {
       <Header />
       <Grid direction="column" align="center" >
         <Container maxWidth="sm">
-          <FormDialog />
-          <ScoresTable />
+          <MainContent />
         </Container>
       </Grid>
     </>

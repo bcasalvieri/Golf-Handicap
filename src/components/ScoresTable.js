@@ -7,9 +7,8 @@ import {
   TableRow,
   Paper
 } from "@material-ui/core";
-import { scores } from "../scoresJSON";
 
-export default function ScoresTable() {
+export default function ScoresTable(props) {
   return (
     <Paper style={{ marginTop: "25px" }}>
       <Table>
@@ -22,7 +21,7 @@ export default function ScoresTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {scores.map(score => (
+          {props.scores.map(score => (
             <TableRow>
               <TableCell component="th" scope="row">
                 {score.course}
