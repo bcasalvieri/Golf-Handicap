@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button,
   Dialog,
@@ -10,8 +10,6 @@ import {
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { NoteAddOutlined } from "@material-ui/icons";
-// import useInputState from "../hooks/useInputState";
-// import Form from "./Form";
 import useForm from "../hooks/useForm";
 
 export default function FormDialog(props) {

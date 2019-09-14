@@ -7,10 +7,8 @@ function App() {
   return (
     <>
       <Header />
-      <Grid direction="column" align="center" >
-        <Container maxWidth="sm">
-          <MainContent />
-        </Container>
+      <Grid container direction="column" align="center" style={{width: "50vw", margin: "0 auto"}}>
+        <MainContent />
       </Grid>
     </>
   );
