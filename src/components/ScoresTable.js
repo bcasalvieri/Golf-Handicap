@@ -29,7 +29,7 @@ export default function ScoresTable(props) {
         </TableHead>
         <TableBody>
           {props.scores.map(score => (
-            <TableRow id={score.id}>
+            <TableRow id={score.id} key={score.id}>
               <TableCell component="th" scope="row">
                 {score.course}
               </TableCell>
@@ -37,12 +37,16 @@ export default function ScoresTable(props) {
               <TableCell align="right">{score.rating}</TableCell>
               <TableCell align="right">{score.slope}</TableCell>
               <TableCell align="right">
-                <IconButton style={{color: primary}} aria-label="edit">
+                <IconButton style={{ color: primary }} aria-label="edit">
                   <Edit />
                 </IconButton>
               </TableCell>
               <TableCell align="right">
-                <IconButton color="secondary" aria-label="delete">
+                <IconButton
+                  color="secondary"
+                  aria-label="delete"
+                  onClick={() => props.delete(score.id)}
+                >
                   <Delete />
                 </IconButton>
               </TableCell>

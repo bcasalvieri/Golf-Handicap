@@ -5,15 +5,15 @@ import ScoresTable from "./ScoresTable";
 import Handicap from "./Handicap";
 import uuid from "uuid/v4";
 
-function MainContent() {
+export default function MainContent() {
   const [state, setState] = useState({
     scores,
     differentials
   });
 
   class GolfScore {
-    constructor(id, course, score, rating, slope) {
-      this.id = id;
+    constructor(course, score, rating, slope) {
+      this.id = uuid();
       this.course = course;
       this.score = score;
       this.rating = rating;
@@ -22,21 +22,24 @@ function MainContent() {
     }
   }
 
-  const addScore = (id, course, score, rating, slope) => {
-    const s = new GolfScore(uuid(), course, score, rating, slope);
+  const addScore = (course, score, rating, slope) => {
+    const s = new GolfScore(course, score, rating, slope);
     setState(state => ({
       scores: [...state.scores, s],
       differentials: [...state.differentials, s.differential]
     }));
   };
 
+  const deleteScore = id => {
+    const newScores = state.scores.filter(score => score.id !== id);
+    setState({scores: newScores});
+  }
+
   return (
     <>
       <FormDialog addScore={addScore} />
       <Handicap diffs={state.differentials} />
-      <ScoresTable scores={state.scores} />
+      <ScoresTable scores={state.scores} delete={deleteScore} />
     </>
   );
 }
-
-export default MainContent;
