@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Dialog,
@@ -10,8 +10,9 @@ import {
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { NoteAddOutlined } from "@material-ui/icons";
-import useInputState from "../hooks/useInputState";
+// import useInputState from "../hooks/useInputState";
 // import Form from "./Form";
+import useForm from "../hooks/useForm";
 
 export default function FormDialog(props) {
   const primary = green[500];
@@ -23,12 +24,14 @@ export default function FormDialog(props) {
     }
   };
 
-  const [course, handleCourseChange, resetCourse] = useInputState("");
-  const [score, handleScoreChange, resetScore] = useInputState("");
-  const [rating, handleRatingChange, resetRating] = useInputState("");
-  const [slope, handleSlopeChange, resetSlope] = useInputState("");
+  const [{ course, score, rating, slope }, setFormState, onChange ] = useForm({
+    course: "",
+    score: "",
+    rating: "",
+    slope: ""
+  });
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   function handleClickOpen() {
     setOpen(true);
@@ -62,40 +65,47 @@ export default function FormDialog(props) {
           <form
             onSubmit={e => {
               e.preventDefault();
-              resetCourse();
-              resetScore();
-              resetRating();
-              resetSlope();
+              setFormState({
+                course: "",
+                score: "",
+                rating: "",
+                slope: ""
+              });
+              props.addScore(course, score, rating, slope);
             }}
           >
             <TextField
               label="Course"
+              name="course"
               value={course}
-              onChange={handleCourseChange}
+              onChange={onChange}
               margin="normal"
               fullWidth
             />
             <TextField
               required
               label="Score"
+              name="score"
               value={score}
-              onChange={handleScoreChange}
+              onChange={onChange}
               margin="normal"
               fullWidth
             />
             <TextField
               required
               label="Rating"
+              name="rating"
               value={rating}
-              onChange={handleRatingChange}
+              onChange={onChange}
               margin="normal"
               fullWidth
             />
             <TextField
               required
               label="Slope"
+              name="slope"
               value={slope}
-              onChange={handleSlopeChange}
+              onChange={onChange}
               margin="normal"
               fullWidth
             />
@@ -105,7 +115,11 @@ export default function FormDialog(props) {
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={() => props.addScore(course, score, rating, slope)} style={{ color: primary }}>
+          <Button
+            type="submit"
+            // onClick={() => props.addScore(course, score, rating, slope)}
+            style={{ color: primary }}
+          >
             Submit Round
           </Button>
         </DialogActions>
