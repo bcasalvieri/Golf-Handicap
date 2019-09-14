@@ -20,6 +20,7 @@ function Score({ id, course, score, rating, slope }) {
         <EditScoreForm
           id={id}
           course={course}
+          score={score}
           rating={rating}
           slope={slope}
           toggleIsEditing={toggleIsEditing}
