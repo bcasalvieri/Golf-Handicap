@@ -30,16 +30,11 @@ export default function MainContent() {
     }));
   };
 
-  const deleteScore = id => {
-    const newScores = state.scores.filter(score => score.id !== id);
-    setState({scores: newScores});
-  }
-
   return (
     <>
       <FormDialog addScore={addScore} />
       <Handicap diffs={state.differentials} />
-      <ScoresTable scores={state.scores} delete={deleteScore} />
+      <ScoresTable scores={state.scores} />
     </>
   );
 }
