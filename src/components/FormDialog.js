@@ -24,36 +24,42 @@ export default function FormDialog(props) {
     }
   };
 
-  const [{ course, score, rating, slope }, setFormState, onChange ] = useForm({
+  const [
+    { course, score, rating, slope, open },
+    setFormState,
+    onChange
+  ] = useForm({
     course: "",
     score: "",
     rating: "",
-    slope: ""
+    slope: "",
+    open: false
   });
 
-  const [open, setOpen] = useState(false);
-
-  function handleClickOpen() {
-    setOpen(true);
+  function toggleDialog() {
+    setFormState({ open: !open });
   }
 
-  function handleClose() {
-    setOpen(false);
+  function handleFormSubmit() {
+    props.addScore(course, score, rating, slope);
+    setFormState({
+      course: "",
+      score: "",
+      rating: "",
+      slope: ""
+    });
+    toggleDialog();
   }
 
   return (
     <>
-      <Button
-        variant="outlined"
-        style={styles.button}
-        onClick={handleClickOpen}
-      >
+      <Button variant="outlined" style={styles.button} onClick={toggleDialog}>
         <NoteAddOutlined style={{ marginRight: "10px" }} />
         Add Round
       </Button>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={toggleDialog}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Add New Round</DialogTitle>
@@ -62,18 +68,7 @@ export default function FormDialog(props) {
             Enter the course name, your score, the course rating, and the course
             slope for your latest round!
           </DialogContentText>
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              setFormState({
-                course: "",
-                score: "",
-                rating: "",
-                slope: ""
-              });
-              props.addScore(course, score, rating, slope);
-            }}
-          >
+          <form>
             <TextField
               label="Course"
               name="course"
@@ -112,14 +107,10 @@ export default function FormDialog(props) {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={toggleDialog} color="secondary">
             Cancel
           </Button>
-          <Button
-            type="submit"
-            // onClick={() => props.addScore(course, score, rating, slope)}
-            style={{ color: primary }}
-          >
+          <Button onClick={handleFormSubmit} style={{ color: primary }}>
             Submit Round
           </Button>
         </DialogActions>

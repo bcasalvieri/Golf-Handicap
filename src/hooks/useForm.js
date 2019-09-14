@@ -10,7 +10,7 @@ const useForm = initialState => {
     const { name, value } = event.target;
     setFormState({ [name]: value });
   };
-  return { formState, setFormState, onChange };
+  return [formState, setFormState, onChange];
 };
 
 export default useForm;
