@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Button,
   Dialog,
@@ -6,13 +6,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { NoteAddOutlined } from "@material-ui/icons";
 import useForm from "../hooks/useForm";
+import { DispatchContext } from "../contexts/ScoresContext";
+import NewScoreForm from "./NewScoreForm";
 
-export default function FormDialog(props) {
+export default function NewScoreDialog() {
   const primary = green[500];
   const styles = {
     button: {
@@ -34,12 +35,17 @@ export default function FormDialog(props) {
     open: false
   });
 
+  const dispatch = useContext(DispatchContext);
+  
   function toggleDialog() {
     setFormState({ open: !open });
   }
 
   function handleFormSubmit() {
-    props.addScore(course, score, rating, slope);
+    if (course === "" || score === "" || rating === "" || slope === "") {
+      return false;
+    }
+    dispatch({ type: "ADD", course, score, slope, rating });
     setFormState({
       course: "",
       score: "",
@@ -66,43 +72,13 @@ export default function FormDialog(props) {
             Enter the course name, your score, the course rating, and the course
             slope for your latest round!
           </DialogContentText>
-          <form>
-            <TextField
-              label="Course"
-              name="course"
-              value={course}
-              onChange={onChange}
-              margin="normal"
-              fullWidth
-            />
-            <TextField
-              required
-              label="Score"
-              name="score"
-              value={score}
-              onChange={onChange}
-              margin="normal"
-              fullWidth
-            />
-            <TextField
-              required
-              label="Rating"
-              name="rating"
-              value={rating}
-              onChange={onChange}
-              margin="normal"
-              fullWidth
-            />
-            <TextField
-              required
-              label="Slope"
-              name="slope"
-              value={slope}
-              onChange={onChange}
-              margin="normal"
-              fullWidth
-            />
-          </form>
+          <NewScoreForm
+            course={course}
+            score={score}
+            rating={rating}
+            slope={slope}
+            onChange={onChange}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={toggleDialog} color="secondary">

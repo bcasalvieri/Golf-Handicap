@@ -7,7 +7,7 @@ export default function ScoresList() {
   const scores = useContext(ScoresContext);
   if (scores.length)
     return (
-      <Paper>
+      <Paper style={{marginBottom: "5rem"}}>
         <Table>
         <TableHead>
           <TableRow>

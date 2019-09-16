@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ScoresContext } from "../contexts/ScoresContext";
 
 export default function Handicap(props) {
   const [handicap, setHandicap] = useState(0);
-  const sortedDiffs = props.diffs.sort((a, b) => a - b);
-  
+  const scores = useContext(ScoresContext);
+  const diffs = scores.reduce((acc, next) => {
+    acc.push(next.differential);
+    return acc;
+  }, []);
+  const sortedDiffs = diffs.sort((a, b) => a - b);
+
   useEffect(() => {
     if (sortedDiffs.length < 7) {
       const score = sortedDiffs.slice(0, 1);
@@ -37,10 +43,7 @@ export default function Handicap(props) {
       const sumOfScores = scores.reduce((acc, next) => acc + next, 0);
       setHandicap(Math.round((sumOfScores / scores.length) * 0.96 * 10) / 10);
     }
-  }, [sortedDiffs])
+  }, [sortedDiffs]);
 
-
-  return (
-    <h2>Your current handicap: {handicap}</h2>
-  )
+  return <h2>Your current handicap: {handicap}</h2>;
 }

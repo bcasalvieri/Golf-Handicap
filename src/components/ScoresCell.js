@@ -3,7 +3,7 @@ import { TableRow, IconButton, TableCell } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import useToggleState from "../hooks/useToggleState";
-import EditScoreForm from "./EditScoreForm";
+import EditScoreDialog from "./EditScoreDialog";
 import { DispatchContext } from "../contexts/ScoresContext";
 
 function Score({ id, course, score, rating, slope }) {
@@ -12,9 +12,10 @@ function Score({ id, course, score, rating, slope }) {
   return (
     <TableRow id={id} key={id}>
       {isEditing ? (
-        <EditScoreForm
+        <EditScoreDialog
           id={id}
           course={course}
+          score={score}
           rating={rating}
           slope={slope}
           toggleIsEditing={toggleIsEditing}
@@ -29,11 +30,16 @@ function Score({ id, course, score, rating, slope }) {
           <TableCell align="right">{slope}</TableCell>
           <TableCell align="right">
             <IconButton
-              color="secondary"
               aria-label="edit"
               onClick={toggleIsEditing}
             >
               <EditIcon />
+            </IconButton>
+            <IconButton
+              aria-label="Delete"
+              onClick={() => dispatch({ type: "REMOVE", id: id })}
+            >
+              <DeleteIcon />
             </IconButton>
           </TableCell>
         </>
