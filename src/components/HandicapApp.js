@@ -22,7 +22,7 @@ function HandicapApp() {
         </Toolbar>
       </AppBar>
       <Grid container justify="center" style={{ marginTop: "1rem" }}>
-        <Grid item xs={11} md={8} lg={5} display="flex" flexdirection="column" justifycontent="center" align="center">
+        <Grid item xs={11} md={8} lg={7} xl={5} display="flex" flexdirection="column" justifycontent="center" align="center">
           <ScoresProvider>
             <NewScoreDialog />
             <Handicap />
